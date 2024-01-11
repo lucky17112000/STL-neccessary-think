@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+#define endl '\n'
+#define strim stringstream
+#define ll long long int
+#define inf INT_MAX
+#define negInf INT_MIN
+#define mod %
+#define find_array_max *max_element(arr.begin(), arr.end());
+#define find_array_min *min_element(arr.begin(), arr.end());
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define left_range(i, x, y) for (int i = x; i <= y; i++)
+#define right_range(i, x, y) for (int i = y; i >= x; i--)
+void hey_output()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+using namespace std;
+const int N = 1e5 + 7;
+// bst stl libary
+// it can remove duplicate
+// it can sort asending order
+// complexity O(logn) for one insert
+static void go_on()
+{
+    set<int> s;
+    int n;
+    cin >> n;
+    // insert in set
+    left_range(i, 0, n - 1)
+    {
+        int val;
+        cin >> val;
+        s.insert(val);
+    }
+
+    // search in set
+    int val;
+    cin >> val;
+    if (s.count(val) == true)
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
+    // print set element
+    for (auto u : s)
+        cout << u << " ";
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    // hey_output();
+    ll t = 1;
+    // cin >> t;
+    while (t--)
+    {
+        go_on();
+    }
+
+    return 0;
+}
