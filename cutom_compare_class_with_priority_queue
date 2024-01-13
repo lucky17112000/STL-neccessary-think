@@ -1,0 +1,124 @@
+#include <bits/stdc++.h>
+#define endl '\n'
+#define strim stringstream
+#define ll long long int
+#define inf INT_MAX
+#define negInf INT_MIN
+#define mod %
+#define find_array_max *max_element(arr.begin(), arr.end());
+#define find_array_min *min_element(arr.begin(), arr.end());
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define psii pair<string, pair<int, int>>
+#define left_range(i, x, y) for (int i = x; i <= y; i++)
+#define right_range(i, x, y) for (int i = y; i >= x; i--)
+void hey_output()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+//O(nlogn)
+using namespace std;
+const int N = 1e5 + 7;
+class Student
+{
+public:
+    string name;
+    int roll;
+    int marks;
+    Student(string name, int roll, int marks)
+    {
+        this->name = name;
+        this->roll = roll;
+        this->marks = marks;
+    }
+};
+class cmp
+{
+public:
+    bool operator()(Student &a, Student &b)
+    {
+        if (a.marks < b.marks)
+        {
+            return true;
+        }
+        else if (a.marks == b.marks)
+        {
+            if (a.roll > b.roll)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+};
+priority_queue<Student, vector<Student>, cmp> pq;
+static void go_on()
+{
+
+    int q;
+    cin >> q;
+    if (q == 0)
+    {
+        string name;
+        int roll, marks;
+        cin >> name >> roll >> marks;
+        Student obj(name, roll, marks);
+        pq.push(obj);
+        cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks;
+        cout << endl;
+    }
+    else if (q == 1)
+    {
+        if (!pq.empty())
+        {
+            cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks;
+            cout << endl;
+        }
+        else
+            cout << "Empty" << endl;
+    }
+    else if (q == 2)
+    {
+        if (!pq.empty())
+        {
+            pq.pop();
+        }
+
+        if (!pq.empty())
+        {
+            cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks;
+            cout << endl;
+        }
+        else
+            cout << "Empty" << endl;
+    }
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    // hey_output();
+    int n;
+    cin >> n;
+    left_range(i, 0, n - 1)
+    {
+        string name;
+        int roll, marks;
+        cin >> name >> roll >> marks;
+        Student obj(name, roll, marks);
+        pq.push(obj);
+    }
+    ll t = 1;
+    cin >> t;
+    while (t--)
+    {
+        go_on();
+    }
+
+    return 0;
+}
