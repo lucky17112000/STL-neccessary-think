@@ -1,0 +1,284 @@
+// Bismillah
+
+/*When I write code, my only request to Creator(Allah) is that he opens
+my eyes of knowledge. And may he be with me... And make everything
+easy for me..Amin...............*/
+// الله أكبر
+// 真主至大
+
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#define endl '\n'
+#define ll long long int
+
+void hey_output()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+
+using namespace __gnu_pbds;
+using namespace std;
+template <typename T>
+using pbds = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+// set == less
+// multiset == less_equal
+// erase dose not work normally multiset in pbds
+
+ll MOD = 1e9 + 7;
+const int N = 1e5 + 7;
+
+//  ** binary exponantiation for find big power
+ll _pow(ll base, ll exp)
+{
+    ll result = 1;
+    while (exp > 0)
+    {
+        if (exp % 2 == 1)
+            result = (result * base) % MOD;
+        base = (base * base) % MOD;
+        exp /= 2;
+    }
+    return result;
+};
+//**all positve subarray count from an array */
+ll allpositvesubarraycount(vector<ll>a , ll  n)
+{
+    long long pos_segs = 0;
+
+    bool up = true;
+    long long up_cnt = 0, down_cnt = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (up)
+            up_cnt++;
+        else
+            down_cnt++;
+
+        // যদি current element negative হয়, তাহলে sign flip হবে
+        if (a[i] < 0)
+            up = !up;
+
+        if (up)
+        {
+            pos_segs += up_cnt;
+        }
+        else
+        {
+            pos_segs += down_cnt;
+        }
+    }
+    return pos_segs;
+}
+//**all positve subarray count from an array */
+
+// ** Function for counting divisors of n
+ll divisor(ll n)
+{
+    vector<ll> divisors;
+    for (ll i = 1; i * i <= n; ++i)
+    {
+        if (n % i == 0)
+        {
+            divisors.push_back(i);         // Add the divisor
+            if (n / i != i)                // Avoid adding the square root twice
+                divisors.push_back(n / i); // Add the corresponding divisor
+        }
+    }
+
+    // for(auto u : divisors)cout << u << " "; //print all divisior
+    return (ll)divisors.size(); // Return the count of divisors
+}
+
+// ** primality test
+bool isPrime(ll n)
+{
+    if (n == 1)
+        return false;
+    if (n == 2)
+        return true;
+    for (int i = 2; i * i <= n; ++i)
+        if (n % i == 0)
+            return false;
+
+    return true;
+}
+
+// ** sieve eratosthense(nlog(logn) from hermonic series)
+vector<bool> sieve(N, true);
+void Sieve()
+{
+    sieve[0] = false;
+    sieve[1] = false;
+    for (int i = 2; i * i <= N; ++i)
+    {
+        if (sieve[i])
+        {
+            for (int j = i + i; j <= N; j += i)
+                sieve[j] = false;
+        }
+    }
+}
+
+// ******make all subset using bitmasking
+void subsettt(ll n)
+{
+    int totalMasks = 1 << n;
+
+    vector<string> allset;
+
+    for (int mask = 0; mask < totalMasks; mask++)
+    {
+        allset.push_back(bitset<15>(mask).to_string().substr(15 - n));
+    }
+}
+// ******make all subset using bitmasking
+
+// **primefactorization(sqrt(n)) as usual for general use
+map<ll, ll> primefactor;
+void prime_factorization(ll n)
+{
+    for (int i = 2; i * i <= n; ++i)
+    {
+        if (n % i == 0)
+        {
+            while (n % i == 0)
+                ++primefactor[i], n /= i;
+        }
+    }
+
+    if (n > 1)
+        ++primefactor[n];
+}
+
+// **primefactorization using sieve
+
+// **GCD and LCM
+ll gcd(ll a, ll b)
+{
+    return __gcd(a, b);
+}
+ll lcm(ll a, ll b)
+{
+    return ((a / gcd(a, b)) * b);
+}
+
+//** eucledian gcd and lcm
+ll ugcd(ll a, ll b)
+{
+    while (b != 0)
+    {
+        ll reminder = a % b;
+        a = b;
+        b = reminder;
+    }
+    return a;
+}
+ll ulcm(ll a, ll b)
+{
+    return ((a / ugcd(a, b)) * b);
+}
+
+//** graph***/
+
+// adjecency matrix
+/*ll n, e;
+   cin >> n >> e;
+   ll adjMat[n][n];
+   memset(adjMat, 0, sizeof(adjMat));
+   while (e--)
+   {
+       ll a, b;
+       cin >> a >> b;
+       adjMat[a][b] = 1;
+       adjMat[b][a] = 1;
+   }*/
+
+// adjecency List
+/*ll n, e;
+ cin >> n >> e;
+ vector<ll> adjList[n];
+ while (e--)
+ {
+     ll a, b;
+     cin >> a >> b;
+     adjList[a].push_back(b);
+     adjList[b].push_back(a);
+ }
+
+ for (int i = 0; i < n; ++i)
+ {
+     cout << i<< ":  ";
+     for(auto u : adjList[i])cout << u << " ";
+     cout << endl;
+ }*/
+
+//** dfs undirected graph*/
+// need ds
+
+vector<ll> adjList[N]; // using loop make all adj[i].clear ..for all
+bool visited[N];       // using memset make false..for all;
+ll parenArray[N];      // for cycle using memset make all -1
+bool flag = false;     // for cycle
+// need ds
+void dfs(ll src)
+{
+    cout << src << " ";
+    visited[src] = true;
+    for (auto u : adjList[src])
+    {
+        if (!visited[u])
+            dfs(u);
+    }
+}
+//** dfs undirected graph*/
+//**undirected graph cycle ditection using dfs */
+void dfs_cycle(ll parent)
+{
+    visited[parent] = true;
+    for (auto u : adjList[parent])
+    {
+        if (visited[u] and u != parenArray[parent])
+        {
+            flag = true;
+            break;
+        }
+        if (!visited[u])
+        {
+            parenArray[u] = parent;
+            dfs_cycle(u);
+        }
+    }
+}
+//**undirected graph cycle ditection using dfs */
+//** graph***/
+
+void Have_A__________Relax_See__________You_Not__________For_Mind()
+{
+
+    // 如果心中充满信念，无比坚定，就一定会看到胜利。
+    //***write code from here */
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    hey_output();
+    //*****Reminder: if I am use sieve array ,then first of all, i have to must call below function....
+    // Sieve();
+
+    int t = 1;
+    // cin >> t;
+    for (int i = 1; i <= t; ++i)
+    {
+        Have_A__________Relax_See__________You_Not__________For_Mind();
+    }
+
+    return 0;
+}
